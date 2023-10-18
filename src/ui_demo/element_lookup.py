@@ -10,7 +10,8 @@ from PySide6.QtWidgets import (
     QButtonGroup,
     QPushButton,
     QVBoxLayout,
-    QHBoxLayout
+    QHBoxLayout,
+    QLineEdit
 )
 
 
@@ -144,9 +145,12 @@ class ElementLookupApp(QWidget):
         super().__init__()
         layout = QVBoxLayout()
 
-        self.option_toggle = OptionToggle(("Element Name", "Atomic Number"))
-        layout.addWidget(self.option_toggle)
-        
+        user_input = QLineEdit("Enter search field here...")
+        layout.addWidget(user_input)
+
+        option_toggle = OptionToggle(("Element Name", "Atomic Number"))
+        layout.addWidget(option_toggle)
+
         self.setLayout(layout)
 
 
