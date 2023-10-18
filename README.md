@@ -13,3 +13,6 @@ Once you have installed everything, you can enter the venv that `pdm` created. T
 ```zsh
 $(pdm venv activate)
 ```
+This should allow you to run any of the python scripts using the packages that you've installed for the project, meaning that you didn't need to install them globally to use them. (Don't quote me on that)
+
+You can also use the VSCode command pallete to select the venv as the interpretor for the current workspace.
