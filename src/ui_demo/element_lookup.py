@@ -11,8 +11,11 @@ from PySide6.QtWidgets import (
     QPushButton,
     QVBoxLayout,
     QHBoxLayout,
-    QLineEdit
+    QLineEdit,
+    QLabel
 )
+
+from PySide6.QtCore import Signal
 
 
 ELEMENTS = (
@@ -145,24 +148,43 @@ class ElementLookupApp(QWidget):
         super().__init__()
         layout = QVBoxLayout()
 
-        user_input = QLineEdit("Enter search field here...")
+        layout.addWidget(QLabel("Search for:"))
+        user_input = QLineEdit()
         layout.addWidget(user_input)
 
+        layout.addWidget(QLabel("Search by:"))
         option_toggle = OptionToggle(("Element Name", "Atomic Number"))
         layout.addWidget(option_toggle)
 
+        submit_btn = QPushButton("Go!")
+        layout.addWidget(submit_btn)
+
+        output = QLabel()
+        layout.addWidget(output)
+
+        # Signal/Slot connections
+        option_toggle.option_changed.connect(user_input.setPlaceholderText)
+        user_input.setPlaceholderText(option_toggle.selection)
+
+        submit_btn.clicked.connect(lambda: output.setText(self.search(option_toggle.selection, user_input.text())))
+
         self.setLayout(layout)
+
+    def search(self, by: str, value: str) -> str:
+        return f"Searching for the {by.lower()}: {value}"
 
 
 class OptionToggle(QWidget):
+
+    option_changed = Signal(str)
+
     def __init__(self, options: tuple) -> None:
         """"""
         super().__init__()
-        self.options = options
         self.button_group = QButtonGroup()
         layout = QHBoxLayout()
 
-        for i, option in enumerate(self.options):
+        for i, option in enumerate(options):
             btn = QPushButton(text=option)
             btn.setCheckable(True)
             if i == 0:
@@ -172,9 +194,11 @@ class OptionToggle(QWidget):
 
         self.setLayout(layout)
 
+        self.button_group.buttonClicked.connect(lambda: self.option_changed.emit(self.selection))
+
     @property
     def selection(self):
-        return self.options(self.button_group.checkedId())
+        return self.button_group.checkedButton().text()
 
 
 if __name__ == "__main__":
