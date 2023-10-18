@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QHBoxLayout,
     QLineEdit,
-    QLabel
+    QLabel,
 )
 
 from PySide6.QtCore import Signal
@@ -148,17 +148,21 @@ class ElementLookupApp(QWidget):
         super().__init__()
         layout = QVBoxLayout()
 
+        # Search input
         layout.addWidget(QLabel("Search for:"))
         user_input = QLineEdit()
         layout.addWidget(user_input)
 
+        # Selection of element/atomic
         layout.addWidget(QLabel("Search by:"))
         option_toggle = OptionToggle(("Element Name", "Atomic Number"))
         layout.addWidget(option_toggle)
 
+        # Submit Button
         submit_btn = QPushButton("Go!")
         layout.addWidget(submit_btn)
 
+        # Output section
         output = QLabel()
         layout.addWidget(output)
 
@@ -166,7 +170,11 @@ class ElementLookupApp(QWidget):
         option_toggle.option_changed.connect(user_input.setPlaceholderText)
         user_input.setPlaceholderText(option_toggle.selection)
 
-        submit_btn.clicked.connect(lambda: output.setText(self.search(option_toggle.selection, user_input.text())))
+        submit_btn.clicked.connect(
+            lambda: output.setText(
+                self.search(option_toggle.selection, user_input.text())
+            )
+        )
 
         self.setLayout(layout)
 
@@ -175,7 +183,6 @@ class ElementLookupApp(QWidget):
 
 
 class OptionToggle(QWidget):
-
     option_changed = Signal(str)
 
     def __init__(self, options: tuple) -> None:
@@ -184,6 +191,7 @@ class OptionToggle(QWidget):
         self.button_group = QButtonGroup()
         layout = QHBoxLayout()
 
+        # Add the buttons
         for i, option in enumerate(options):
             btn = QPushButton(text=option)
             btn.setCheckable(True)
@@ -194,7 +202,10 @@ class OptionToggle(QWidget):
 
         self.setLayout(layout)
 
-        self.button_group.buttonClicked.connect(lambda: self.option_changed.emit(self.selection))
+        # Emit a signal with the current selection every time the selection is changed
+        self.button_group.buttonClicked.connect(
+            lambda: self.option_changed.emit(self.selection)
+        )
 
     @property
     def selection(self):
