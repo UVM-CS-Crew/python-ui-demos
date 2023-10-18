@@ -2,21 +2,19 @@ from __future__ import annotations
 
 import sys
 from typing import Optional
-import PySide6.QtCore
 
+import PySide6.QtCore
+from PySide6.QtCore import Signal
 from PySide6.QtWidgets import (
     QApplication,
-    QWidget,
     QButtonGroup,
+    QHBoxLayout,
+    QLabel,
+    QLineEdit,
     QPushButton,
     QVBoxLayout,
-    QHBoxLayout,
-    QLineEdit,
-    QLabel,
+    QWidget,
 )
-
-from PySide6.QtCore import Signal
-
 
 ELEMENTS = (
     None,
