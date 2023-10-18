@@ -144,6 +144,9 @@ class ElementLookupApp(QWidget):
 
     def __init__(self, elements: tuple) -> None:
         super().__init__()
+
+        self.elements = elements
+
         layout = QVBoxLayout()
 
         # Search input
