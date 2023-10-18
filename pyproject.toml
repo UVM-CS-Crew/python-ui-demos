@@ -1,0 +1,19 @@
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "es-mitty", email = "elijah.smith@uvm.edu"},
+]
+dependencies = [
+    "pyside6>=6.6.0",
+]
+requires-python = ">=3.8,<=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "isort>=5.12.0",
+    "black>=23.10.0",
+]
