@@ -80,7 +80,7 @@ class ElementLookupApp(QWidget):
 
     def search(self, by: str, value: str) -> str:
         if (by == "Element Name"):
-            element = value.capitalize()
+            element = value.capitalize().strip()
                 
             if (element in ELEMENTS):
                 return f'The atomic number of {element} is {ELEMENTS.index(element)}'
