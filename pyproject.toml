@@ -1,6 +1,6 @@
 [project]
-name = "Python UI Demos"
-version = ""
+name = "Python_UI_Demos"
+version = "v1.0.0"
 description = ""
 authors = [
     {name = "es-mitty", email = "elijah.smith@uvm.edu"},
