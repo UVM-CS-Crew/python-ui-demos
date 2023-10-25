@@ -81,19 +81,19 @@ class ElementLookupApp(QWidget):
     def search(self, by: str, value: str) -> str:
         if (by == "Element Name"):
             element = value.capitalize().strip()
-                
+
             if (element in ELEMENTS):
                 return f'The atomic number of {element} is {ELEMENTS.index(element)}'
             else:
                 return f'Error. "{value}" is not a valid element name.'
-            
+
         else:
             try:
                 atomic_number = int(value)
             except ValueError:
                 return f'Error. "{value}" is not a valid atomic number.'
             
-            if atomic_number < len(ELEMENTS):
+            if 0 <= atomic_number < len(ELEMENTS):
                 element_name = ELEMENTS[atomic_number]
                 return f'The element with the atomic number {atomic_number} is {element_name}.'
             else:
