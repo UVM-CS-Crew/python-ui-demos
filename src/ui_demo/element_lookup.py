@@ -16,127 +16,29 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-ELEMENTS = (
-    None,
-    "Hydrogen",
-    "Helium",
-    "Lithium",
-    "Beryllium",
-    "Boron",
-    "Carbon",
-    "Nitrogen",
-    "Oxygen",
-    "Fluorine",
-    "Neon",
-    "Sodium",
-    "Magnesium",
-    "Aluminum",
-    "Silicon",
-    "Phosphorus",
-    "Sulfur",
-    "Chlorine",
-    "Argon",
-    "Potassium",
-    "Calcium",
-    "Scandium",
-    "Titanium",
-    "Vanadium",
-    "Chromium",
-    "Manganese",
-    "Iron",
-    "Cobalt",
-    "Nickel",
-    "Copper",
-    "Zinc",
-    "Gallium",
-    "Germanium",
-    "Arsenic",
-    "Selenium",
-    "Bromine",
-    "Krypton",
-    "Rubidium",
-    "Strontium",
-    "Yttrium",
-    "Zirconium",
-    "Niobium",
-    "Molybdenum",
-    "Technetium",
-    "Ruthenium",
-    "Rhodium",
-    "Palladium",
-    "Silver",
-    "Cadmium",
-    "Indium",
-    "Tin",
-    "Antimony",
-    "Tellurium",
-    "Iodine",
-    "Xenon",
-    "Cesium",
-    "Barium",
-    "Lanthanum",
-    "Cerium",
-    "Praseodymium",
-    "Neodymium",
-    "Promethium",
-    "Samarium",
-    "Europium",
-    "Gadolinium",
-    "Terbium",
-    "Dysprosium",
-    "Holmium",
-    "Erbium",
-    "Thulium",
-    "Ytterbium",
-    "Lutetium",
-    "Hafnium",
-    "Tantalum",
-    "Tungsten",
-    "Rhenium",
-    "Osmium",
-    "Iridium",
-    "Platinum",
-    "Gold",
-    "Mercury",
-    "Thallium",
-    "Lead",
-    "Bismuth",
-    "Polonium",
-    "Astatine",
-    "Radon",
-    "Francium",
-    "Radium",
-    "Actinium",
-    "Thorium",
-    "Protactinium",
-    "Uranium",
-    "Neptunium",
-    "Plutonium",
-    "Americium",
-    "Curium",
-    "Berkelium",
-    "Californium",
-    "Einsteinium",
-    "Fermium",
-    "Mendelevium",
-    "Nobelium",
-    "Lawrencium",
-    "Rutherfordium",
-    "Dubnium",
-    "Seaborgium",
-    "Bohrium",
-    "Hassium",
-    "Meitnerium",
-    "Darmstadtium",
-    "Roentgenium",
-    "Copernicium",
-    "Nihonium",
-    "Flerovium",
-    "Moscovium",
-    "Livermorium",
-    "Tennessine",
-    "Oganesson",
-)
+ELEMENTS = (None, "Hydrogen", "Helium", "Lithium", "Beryllium", "Boron",
+            "Carbon", "Nitrogen", "Oxygen", "Fluorine", "Neon", "Sodium",
+            "Magnesium", "Aluminum", "Silicon", "Phosphorus", "Sulfur",
+            "Chlorine", "Argon", "Potassium", "Calcium", "Scandium",
+            "Titanium", "Vanadium", "Chromium", "Manganese", "Iron", "Cobalt",
+            "Nickel", "Copper", "Zinc", "Gallium", "Germanium", "Arsenic",
+            "Selenium", "Bromine", "Krypton", "Rubidium", "Strontium",
+            "Yttrium", "Zirconium", "Niobium", "Molybdenum", "Technetium",
+            "Ruthenium", "Rhodium", "Palladium", "Silver", "Cadmium", "Indium",
+            "Tin", "Antimony", "Tellurium", "Iodine", "Xenon", "Cesium",
+            "Barium", "Lanthanum", "Cerium", "Praseodymium", "Neodymium",
+            "Promethium", "Samarium", "Europium", "Gadolinium", "Terbium",
+            "Dysprosium", "Holmium", "Erbium", "Thulium", "Ytterbium",
+            "Lutetium", "Hafnium", "Tantalum", "Tungsten", "Rhenium", "Osmium",
+            "Iridium", "Platinum", "Gold", "Mercury", "Thallium", "Lead",
+            "Bismuth", "Polonium", "Astatine", "Radon", "Francium", "Radium",
+            "Actinium", "Thorium", "Protactinium", "Uranium", "Neptunium",
+            "Plutonium", "Americium", "Curium", "Berkelium", "Californium",
+            "Einsteinium", "Fermium", "Mendelevium", "Nobelium", "Lawrencium",
+            "Rutherfordium", "Dubnium", "Seaborgium", "Bohrium", "Hassium",
+            "Meitnerium", "Darmstadtium", "Roentgenium", "Copernicium",
+            "Nihonium", "Flerovium", "Moscovium", "Livermorium", "Tennessine",
+            "Oganesson")
 
 
 class ElementLookupApp(QWidget):
@@ -180,8 +82,25 @@ class ElementLookupApp(QWidget):
         self.setLayout(layout)
 
     def search(self, by: str, value: str) -> str:
-        return f"Searching for the {by.lower()}: {value}"
+        if (by == "Element Name"):
+            element = value.capitalize().strip()
 
+            if (element in ELEMENTS):
+                return f'The atomic number of {element} is {ELEMENTS.index(element)}'
+            else:
+                return f'Error. "{value}" is not a valid element name.'
+
+        else:
+            try:
+                atomic_number = int(value)
+            except ValueError:
+                return f'Error. "{value}" is not a valid atomic number.'
+            
+            if 0 <= atomic_number < len(ELEMENTS):
+                element_name = ELEMENTS[atomic_number]
+                return f'The element with the atomic number {atomic_number} is {element_name}.'
+            else:
+                return f'Error. No element with the atomic number {atomic_number}.'
 
 class OptionToggle(QWidget):
     option_changed = Signal(str)
